@@ -53,7 +53,11 @@ const I18n = createI18n({locale: 'current',  messages: [], legacy: false});
 
 import Router from '~/routes'
 
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 app.use(Router)
     .use(Pinia)
     .use(I18n)
+    .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')
