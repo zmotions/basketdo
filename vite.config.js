@@ -42,5 +42,10 @@ export default defineConfig({
     hmr: {
       port: 3036
     }
-  }
+  },
+  resolve: {
+    alias: {
+      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+    }
+  },
 })

@@ -28,6 +28,9 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
 
+// You can specify which plugins you need
+import { Tooltip, Toast, Popover } from 'bootstrap';
+
 import Axios from "axios";
 import { createApp } from 'vue';
 
@@ -53,4 +56,7 @@ import Router from '~/routes'
 app.use(Router)
     .use(Pinia)
     .use(I18n)
+    // .use(Toast)
+    // .use(Tooltip)
+    // .use(Popover)
     .mount('#app')
