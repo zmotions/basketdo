@@ -37,5 +37,10 @@ export default defineConfig({
       input: "/app/javascript/entrypoints/application.js"
     }
   },
-  define: { "process.env": {} }
+  define: { "process.env": {} },
+  server: {
+    hmr: {
+      port: 3036
+    }
+  }
 })
