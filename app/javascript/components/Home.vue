@@ -5,5 +5,7 @@ import Navbar from "~/components/Navbar.vue";
 
 <template>
   <Navbar/>
-  <h1>Hello World</h1>
+  <div class="container-fluid">
+    <h1>Hello World</h1>
+  </div>
 </template>

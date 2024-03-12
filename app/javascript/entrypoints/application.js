@@ -56,7 +56,4 @@ import Router from '~/routes'
 app.use(Router)
     .use(Pinia)
     .use(I18n)
-    // .use(Toast)
-    // .use(Tooltip)
-    // .use(Popover)
     .mount('#app')

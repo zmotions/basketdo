@@ -40,7 +40,8 @@ export default defineConfig({
   define: { "process.env": {} },
   server: {
     hmr: {
-      port: 3036
+      host: 'localhost',
+      protocol: 'ws'
     }
   },
   resolve: {
