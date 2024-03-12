@@ -48,8 +48,7 @@ const Pinia = createPinia();
 Pinia.use(({ store }) => { store.Api = Api })
 
 // I18n loader
-import { createI18n } from 'vue-i18n';
-const I18n = createI18n({locale: 'current',  messages: [], legacy: false});
+import { i18n, i18nPlugin } from '~/plugins/i18n';
 
 import Router from '~/routes'
 
@@ -58,6 +57,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 app.use(Router)
     .use(Pinia)
-    .use(I18n)
+    .use(i18n)
+    .use(i18nPlugin)
     .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')

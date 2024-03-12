@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import RubyPlugin from 'vite-plugin-ruby';
 import FullReload from "vite-plugin-full-reload";
 import Vue from '@vitejs/plugin-vue'
+import ViteYaml from '@modyfi/vite-plugin-yaml';
 import AutoImport from 'unplugin-auto-import/vite'
 import * as path from "path";
 
@@ -27,6 +28,7 @@ export default defineConfig({
     }),
     RubyPlugin(),
     Vue(),
+    ViteYaml(),
     RubyPlugin(),
     FullReload(["config/routes.rb", "app/views/**/*"], { delay: 200 }),
   ],

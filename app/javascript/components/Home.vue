@@ -6,6 +6,6 @@ import Navbar from "~/components/Navbar.vue";
 <template>
   <Navbar/>
   <div class="container-fluid">
-    <h1>Hello World</h1>
+    <h1 v-text="$t('hello')"></h1>
   </div>
 </template>
