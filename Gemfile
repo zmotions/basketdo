@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.2.3"
+ruby "3.3.1"
 
 # Provide app configuration via ENV
 gem 'dotenv', groups: [:development, :test]

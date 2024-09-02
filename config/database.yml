@@ -13,17 +13,19 @@
 # gem "pg"
 #
 default: &default
-  user: <%= ENV["BASKETDO_DATABASE_USER"] %>
-  password: <%= ENV["BASKETDO_DATABASE_PASSWORD"] %>
   adapter: postgresql
   encoding: unicode
+  host: localhost
+  port: 5432
+  user: <%= ENV.fetch("BASKETDO_DB_USER") { 'basketdo' } %>
+  password: <%= ENV.fetch("BASKETDO_DB_PASSWORD") { 'basketdo' } %>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: basketdo_development
+  database: basketdo_dev
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -81,4 +83,4 @@ test:
 #
 production:
   <<: *default
-  database: basketdo_production
+  database: basketdo_prod
