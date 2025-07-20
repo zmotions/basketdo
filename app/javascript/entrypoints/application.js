@@ -1,4 +1,3 @@
-
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
 //
@@ -29,31 +28,41 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // import '~/index.css'
 
 // You can specify which plugins you need
-import { Tooltip, Toast, Popover } from 'bootstrap';
+import {Tooltip, Toast, Popover} from 'bootstrap';
 
 import Axios from "axios";
-import { createApp } from 'vue';
+import {createApp} from 'vue';
 
-import Home from '~/components/Home.vue';
+import App from '~/components/App.vue';
 
-const app = createApp(Home);
+const app = createApp(App);
 
 // API + Axios wrapper
-import { createApi } from '~/plugins/api';
+import {createApi} from '~/plugins/api';
+
 const Api = createApi({handler: Axios, namespace: ''});
 
 // Pinia + Axios setup
-import { createPinia } from 'pinia';
+import {createPinia} from 'pinia';
+
 const Pinia = createPinia();
-Pinia.use(({ store }) => { store.Api = Api })
+Pinia.use(({store}) => {
+    store.Api = Api
+})
 
 // I18n loader
-import { i18n, i18nPlugin } from '~/plugins/i18n';
+import {i18n, i18nPlugin} from '~/plugins/i18n';
 
 import Router from '~/routes'
 
 /* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import {far} from '@fortawesome/free-regular-svg-icons'
+import {fas} from "@fortawesome/free-solid-svg-icons";
+import {fab} from '@fortawesome/free-brands-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core';
+
+library.add(far, fas, fab);
 
 app.use(Router)
     .use(Pinia)
