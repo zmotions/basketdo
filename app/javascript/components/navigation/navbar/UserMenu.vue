@@ -1,8 +1,3 @@
-<script setup>
-import {faUser, faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
-import {faAddressCard} from "@fortawesome/free-regular-svg-icons";
-</script>
-
 <template>
   <ul class="navbar-nav mb-2 mb-lg-0">
     <li class="nav-item">
@@ -11,18 +6,20 @@ import {faAddressCard} from "@fortawesome/free-regular-svg-icons";
            href="#" role="button"
            data-bs-toggle="dropdown"
            aria-expanded="false">
-          <font-awesome-icon :icon="faUser"></font-awesome-icon>
+          <font-awesome-icon icon="fas fa-user"></font-awesome-icon>
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
           <li>
-            <a class="dropdown-item" href="#">
-              <font-awesome-icon :icon="faAddressCard"/>
-              Profile
-            </a>
+            <RouterLink to="profile"
+                        class="dropdown-item"
+                        aria-current="page">
+              <font-awesome-icon icon="fas fa-address-card"/>
+              <span class="mx-1" v-text="$t('navigation.navbar.profile')"></span>
+            </RouterLink>
           </li>
           <li>
             <a class="dropdown-item" href="#">
-              <font-awesome-icon :icon="faRightFromBracket"/>
+              <font-awesome-icon icon="fas fa-right-from-bracket"/>
               Logout
             </a>
           </li>
@@ -31,3 +28,5 @@ import {faAddressCard} from "@fortawesome/free-regular-svg-icons";
     </li>
   </ul>
 </template>
+<script setup lang="ts">
+</script>
