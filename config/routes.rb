@@ -5,5 +5,11 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  root 'home#index', as: :home
+  root 'client#index', as: :app
+
+  # Fallback path for client routing
+  scope('/', format: false) do
+    # Catch all for HTML 5 history routing. This must be the last route.
+    get('*path', to: 'client#index')
+  end
 end
