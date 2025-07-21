@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils';
-import App from "~/components/App.vue";
+import Home from "~/features/home/Home.vue";
 
-describe('App.vue', () => {
+describe('Home.vue', () => {
     it('foo', async () => {
-        const wrapper = await mount(App);
+        const wrapper = await mount(Home);
         await flushPromises();
-        expect(wrapper.text()).toContain("Hello World");
+        expect(wrapper.text()).toContain("Home");
     })
 })
