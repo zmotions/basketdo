@@ -38,16 +38,14 @@ import App from '~/components/App.vue';
 const app = createApp(App);
 
 // API + Axios wrapper
-import {createApi} from '~/plugins/api';
-
-const Api = createApi({handler: Axios, namespace: ''});
+import {httpClient} from '~/plugins/api';
 
 // Pinia + Axios setup
 import {createPinia} from 'pinia';
 
 const Pinia = createPinia();
 Pinia.use(({store}) => {
-    store.Api = Api
+    store.Api = httpClient
 })
 
 // I18n loader

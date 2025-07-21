@@ -20,7 +20,7 @@ function toggleSidebar() {
 </script>
 
 <template>
-  <div v-if="items.length" class="basketdo-sidebar" :class="{'basketdo-sidebar--expanded': sidebarExpanded}">
+  <div class="basketdo-sidebar" :class="{'basketdo-sidebar--expanded': sidebarExpanded}">
     <div class="d-flex flex-column flex-grow-1 flex-shrink-0 bg-dark">
       <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
         <li class="nav-item " v-for="(item, index) in items" :key="index">
@@ -36,6 +36,7 @@ function toggleSidebar() {
                   v-text="item.name"></span>
           </a>
         </li>
+        <slot name="items"></slot>
       </ul>
       <div class="flex-end">
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">

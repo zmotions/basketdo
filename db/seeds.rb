@@ -7,3 +7,14 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Initial dummy data
+Task.destroy_all
+20.times do |index|
+  Task.create({
+                name: "Task #{index}",
+                description: "This is a task",
+                estimated: 20 * index,
+                due_on: (10 * index).days.from_now
+              })
+end
