@@ -70,7 +70,7 @@ function toggleSidebar() {
     border-radius: 0;
   }
   .bg-dark{
-    background-color: #424D59 !important;
+    background-color: #25333c !important;
   }
 }
 </style>
