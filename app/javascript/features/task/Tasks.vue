@@ -3,6 +3,8 @@ import {onMounted} from "vue";
 import { httpClient } from '~/plugins/api.js';
 import Sidebar from "~/components/navigation/Sidebar.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {lxDueIn, lxFormatDate} from "~/components/filters/time-filter.js";
+
 const tasks = ref([]);
 const showDialog = ref(false);
 const taskTemplate = {
@@ -72,7 +74,11 @@ onMounted(() => {
         <div class="card-body">
           <h5 class="card-title" v-text="task.name"></h5>
           <h6 class="card-subtitle mb-2 text-muted" v-text="task.description"></h6>
-          <p class="card-text">Estimated: {{ task.estimated }}, Due date: {{ task.due_on }}</p>
+          <p class="card-text">
+            Estimated: <strong>{{ task.estimated }} hours</strong>,
+            Due date: <strong>{{ lxFormatDate(task.due_on) }}</strong>,
+            Due in: <strong>{{ lxDueIn(task.due_on) }}</strong>
+          </p>
           <button type="button" class="btn btn-outline-danger" @click="deleteTask(task.id)">Delete</button>
         </div>
       </div>
