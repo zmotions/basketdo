@@ -7,6 +7,8 @@ const instance = Axios.create({
     timeout: 1000,
     headers: { 'X-CSRF-Token': csrfToken }
 });
+
+/*
 instance.interceptors.response.use(
     (response) => {
         return response;
@@ -23,6 +25,6 @@ instance.interceptors.response.use(
 
         return Promise.reject(error);
     }
-);
+);*/
 
 export const httpClient = instance;
