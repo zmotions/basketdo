@@ -12,4 +12,10 @@
 #
 class Task < ApplicationRecord
   validates :name, presence: true
+
+  class << self
+    def categories
+      # pluck(:category).uniq.sort
+    end
+  end
 end

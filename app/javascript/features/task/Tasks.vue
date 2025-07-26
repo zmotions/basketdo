@@ -1,45 +1,46 @@
 <script setup>
 import {onMounted} from "vue";
-import { httpClient } from '~/plugins/api.js';
+import {httpClient} from '~/plugins/api.js';
 import Sidebar from "~/components/navigation/Sidebar.vue";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {lxDueIn, lxFormatDate} from "~/components/filters/time-filter.js";
+import List from "~/components/list/List.vue";
+import TaskItem from "~/features/task/components/TaskItem.vue";
+import {createTaskTemplate} from "~/features/task/templates/task-template.js";
+import TaskModal from "~/features/task/modals/TaskModal.vue";
 
 const tasks = ref([]);
 const showDialog = ref(false);
-const taskTemplate = {
-  name: '',
-  description: '',
-  due_on: null,
-  estimated: 0
-};
-const currentTask = ref(taskTemplate);
+const currentTask = ref(createTaskTemplate());
+const creatingTask = ref(false);
 
-function showTaskDialog(){
+function showTaskDialog() {
   showDialog.value = true;
 }
-function closeTaskDialog(){
+
+function closeTaskDialog() {
   showDialog.value = false;
 }
 
 function loadTasks() {
   httpClient.get("/tasks.json")
       .then(res => {
-        tasks.value = res.data;
+        tasks.value = res.data.list;
       })
 }
 
-function createTask(){
+function createTask() {
+  creatingTask.value = true;
   httpClient.post("/tasks.json", currentTask.value)
       .then(() => {
+        creatingTask.value = false;
         closeTaskDialog();
         clearTask();
         loadTasks();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .then(() => creatingTask.value = false);
 }
 
-function deleteTask(id){
+function deleteTask(id) {
   httpClient.delete(`/tasks/${id}.json`)
       .then(() => {
         loadTasks();
@@ -47,8 +48,8 @@ function deleteTask(id){
       .catch((err) => console.log(err));
 }
 
-function clearTask(){
-  currentTask.value = taskTemplate;
+function clearTask() {
+  currentTask.value = createTaskTemplate();
 }
 
 onMounted(() => {
@@ -70,55 +71,76 @@ onMounted(() => {
       </template>
     </Sidebar>
     <div class="basketdo-tasks__content">
-      <div v-for="task in tasks" :key="task.id" class="card">
-        <div class="card-body">
-          <h5 class="card-title" v-text="task.name"></h5>
-          <h6 class="card-subtitle mb-2 text-muted" v-text="task.description"></h6>
-          <p class="card-text">
-            Estimated: <strong>{{ task.estimated }} hours</strong>,
-            Due date: <strong>{{ lxFormatDate(task.due_on) }}</strong>,
-            Due in: <strong>{{ lxDueIn(task.due_on) }}</strong>
-          </p>
-          <button type="button" class="btn btn-outline-danger" @click="deleteTask(task.id)">Delete</button>
-        </div>
-      </div>
+      <List>
+        <template #sidebar>
+          <h1>Sidebar</h1>
+        </template>
+        <template #filter>
+          <div class="row g-2 mt-0">
+            <div class="col-8">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search tasks..." aria-label="Task search input"
+                       aria-describedby="button-addon2">
+                <button class="btn btn-primary" type="button" id="button-addon2">
+                  <font-awesome-icon icon="fa fa-search"></font-awesome-icon>
+                </button>
+              </div>
+            </div>
+            <div class="col-4">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Open this select menu</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+        </template>
+        <template #actions>
+          <div class="row g-2">
+            <div class="col-8">
+              <ul class="nav nav-pills">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Cards</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">List</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-4">
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-success" @click="showTaskDialog">New Task</button>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template #items>
+          <div class="row g-2">
+            <div class="col-6" v-for="task in tasks" :key="task.id">
+              <TaskItem :task="task" @delete="deleteTask"/>
+            </div>
+          </div>
+        </template>
+        <template #pagination>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
+        </template>
+      </List>
     </div>
 
-    <!-- Modal -->
-
-    <div v-if="showDialog" class="modal-backdrop fade show"></div>
-    <div class="modal fade" :class="{ show: showDialog, 'd-block': showDialog }" id="staticBackdrop" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">New Task</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Name</label>
-              <input v-model="currentTask.name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Task name...">
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-              <textarea v-model="currentTask.description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Estimation (hours)</label>
-              <input v-model="currentTask.estimated" type="number" class="form-control" id="exampleFormControlInput1" placeholder="0">
-            </div>
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Due Date</label>
-              <input v-model="currentTask.due_on" type="date" class="form-control" id="exampleFormControlInput1" placeholder="Due on...">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeTaskDialog">Cancel</button>
-            <button type="button" class="btn btn-primary" @click="createTask">Create</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <TaskModal :task="currentTask"
+               :show="showDialog"
+               :loading="creatingTask"
+               @close="closeTaskDialog"
+               @create="createTask"/>
   </div>
 </template>
 
@@ -127,6 +149,7 @@ onMounted(() => {
   display: flex;
   height: 100%;
   width: 100%;
+
   &__content {
     flex-basis: 100%;
     height: calc(100% - 55px);
