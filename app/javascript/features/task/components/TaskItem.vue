@@ -32,15 +32,19 @@ const collapsed = ref(true);
     </div>
     <div v-if="!collapsed" class="card-body py-1 px-2">
       <div class="card-badges">
-          <span class="badge bg-secondary-subtle text-secondary">
+          <span class="badge bg-secondary-subtle text-secondary me-1">
+            <font-awesome-icon icon="fa fa-cat"></font-awesome-icon>
+            <strong class="ms-1">{{ task.category.name }}</strong>
+          </span>
+          <span class="badge bg-secondary-subtle text-secondary me-1">
             <font-awesome-icon icon="fa fa-calendar"></font-awesome-icon>
             <strong class="ms-1">{{ lxFormatDate(task.due_on) }}</strong>
           </span>
-        <span class="badge bg-secondary-subtle text-secondary mx-1">
+        <span class="badge bg-secondary-subtle text-secondary me-1">
             <font-awesome-icon icon="fa fa-clock"></font-awesome-icon>
             <strong class="ms-1">{{ task.duration }}h</strong>
           </span>
-        <span class="badge bg-secondary-subtle text-secondary">
+        <span class="badge bg-secondary-subtle text-secondary me-1">
             <font-awesome-icon icon="fa fa-hourglass"></font-awesome-icon>
             <strong class="ms-1">{{ lxDueIn(task.due_on) }}</strong>
           </span>
