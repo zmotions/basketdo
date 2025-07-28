@@ -2,7 +2,7 @@ const TASK_TEMPLATE = {
     name: '',
     description: '',
     due_on: null,
-    estimated: 0
+    duration: 0
 };
 
 

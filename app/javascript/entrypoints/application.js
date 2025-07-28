@@ -62,6 +62,13 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 
 library.add(far, fas, fab);
 
+// You can use Bootstrap JS functionality via the line below, and injecting it
+// into the components via inject from vue with the same key that you provide it with, see below:
+// import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
+// app.provide('bootstrap', bootstrap)
+// but Bootstrap JS functionality requires direct DOM access and might be counterproductive to how Vue works,
+// a better  way would be to "mimic" the JS functionality with custom components (that's how it's done here)
+
 app.use(Router)
     .use(Pinia)
     .use(i18n)

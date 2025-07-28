@@ -5,10 +5,14 @@
 #  id          :bigint           not null, primary key
 #  name        :string
 #  description :string
-#  estimated   :float
+#  duration    :float
 #  due_on      :datetime
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  priority    :integer          default("normal")
+#  status      :integer          default("open")
+#  color       :string           default("#ffffff")
+#  category_id :bigint
 #
 
 one:

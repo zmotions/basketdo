@@ -38,7 +38,7 @@ const collapsed = ref(true);
           </span>
         <span class="badge bg-secondary-subtle text-secondary mx-1">
             <font-awesome-icon icon="fa fa-clock"></font-awesome-icon>
-            <strong class="ms-1">{{ task.estimated }}h</strong>
+            <strong class="ms-1">{{ task.duration }}h</strong>
           </span>
         <span class="badge bg-secondary-subtle text-secondary">
             <font-awesome-icon icon="fa fa-hourglass"></font-awesome-icon>

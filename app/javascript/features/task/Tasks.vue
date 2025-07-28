@@ -8,6 +8,7 @@ import {createTaskTemplate} from "~/features/task/templates/task-template.js";
 import TaskModal from "~/features/task/modals/TaskModal.vue";
 
 const tasks = ref([]);
+const categories = ref([]);
 const showDialog = ref(false);
 const currentTask = ref(createTaskTemplate());
 const creatingTask = ref(false);
@@ -21,15 +22,22 @@ function closeTaskDialog() {
 }
 
 function loadTasks() {
-  httpClient.get("/tasks.json")
+  return httpClient.get("/tasks.json")
       .then(res => {
         tasks.value = res.data.list;
       })
 }
 
+function loadCategories() {
+  return httpClient.get("/categories.json")
+      .then(res => {
+        categories.value = res.data;
+      })
+}
+
 function createTask() {
   creatingTask.value = true;
-  httpClient.post("/tasks.json", currentTask.value)
+  return httpClient.post("/tasks.json", currentTask.value)
       .then(() => {
         creatingTask.value = false;
         closeTaskDialog();
@@ -41,7 +49,7 @@ function createTask() {
 }
 
 function deleteTask(id) {
-  httpClient.delete(`/tasks/${id}.json`)
+  return httpClient.delete(`/tasks/${id}.json`)
       .then(() => {
         loadTasks();
       })
@@ -54,6 +62,7 @@ function clearTask() {
 
 onMounted(() => {
   loadTasks();
+  loadCategories();
 })
 
 </script>
@@ -88,10 +97,12 @@ onMounted(() => {
             </div>
             <div class="col-4">
               <select class="form-select" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option selected>Category...</option>
+                <option v-for="category in categories"
+                        :value="category.id"
+                        v-text="category.name"
+                        :key="category.id">
+                </option>
               </select>
             </div>
           </div>

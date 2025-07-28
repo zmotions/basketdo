@@ -42,8 +42,8 @@ defineProps({
         <textarea v-model="task.description" class="form-control" id="taskDescriptionInput" rows="3"></textarea>
       </div>
       <div class="mb-3">
-        <label for="taskEstimatedInput" class="form-label">Estimation (hours)</label>
-        <input v-model="task.estimated" type="number" class="form-control" id="taskEstimatedInput"
+        <label for="taskDurationInput" class="form-label">Duration (hours)</label>
+        <input v-model="task.duration" type="number" class="form-control" id="taskDurationInput"
                placeholder="0">
       </div>
       <div class="mb-3">

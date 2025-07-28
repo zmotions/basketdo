@@ -9,12 +9,28 @@
 #   end
 
 # Initial dummy data
+Category.destroy_all
 Task.destroy_all
-20.times do |index|
+
+category1 = Category.create({ name: "Art"})
+category2 = Category.create({ name: "Exercise"})
+
+10.times do |index|
   Task.create({
                 name: "Task #{index}",
                 description: "This is a task",
-                estimated: 20 * index,
-                due_on: (10 * index).days.from_now
+                duration: 20 * index,
+                due_on: (10 * index).days.from_now,
+                category: category1
+              })
+end
+
+10.times do |index|
+  Task.create({
+                name: "TODO #{index}",
+                description: "This is a todo",
+                duration: 20 * index,
+                due_on: (10 * index).days.from_now,
+                category: category2
               })
 end
