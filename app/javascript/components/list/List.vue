@@ -4,7 +4,7 @@
 
 <template>
 <div class="container-fluid">
-  <div class="row">
+  <div class="row g-2">
     <div v-if="$slots.sidebar" class="col-3">
       <slot name="sidebar"></slot>
     </div>

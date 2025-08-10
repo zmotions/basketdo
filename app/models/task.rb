@@ -15,7 +15,7 @@
 #  category_id :bigint
 #
 class Task < ApplicationRecord
-  belongs_to :category
+  belongs_to :category, optional: true
 
   validates :name, presence: true
   validates :status, inclusion: { in: %w(open in_progress done) }

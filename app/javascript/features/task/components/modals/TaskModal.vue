@@ -1,6 +1,6 @@
 <script setup>
-import BsModal from "~/components/bootstrap/BsModal.vue";
-import BsSpinner from "~/components/bootstrap/BsSpinner.vue";
+import BsModal from "@/components/bootstrap/BsModal.vue";
+import BsSpinner from "@/components/bootstrap/BsSpinner.vue";
 
 defineProps({
   show: {

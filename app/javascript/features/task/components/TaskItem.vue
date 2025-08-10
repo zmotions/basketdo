@@ -18,10 +18,10 @@ const collapsed = ref(true);
       <div class="d-flex align-items-center">
         <strong class="flex-grow-1" v-text="task.name"></strong>
         <div class="card-header__actions">
-          <button type="button" class="btn btn-sm btn-light" @click="$emit('edit', task.id)">
+          <button type="button" class="btn btn-sm btn-light" @click.stop.prevent="$emit('edit', task.id)">
             <font-awesome-icon icon="fas fa-edit"></font-awesome-icon>
           </button>
-          <button type="button" class="btn btn-sm btn-light text-danger" @click="$emit('delete', task.id)">
+          <button type="button" class="btn btn-sm btn-light text-danger" @click.stop.prevent="$emit('delete', task.id)">
             <font-awesome-icon icon="fas fa-trash"></font-awesome-icon>
           </button>
           <button class="btn btn-sm btn-light" @click.stop.prevent="collapsed = !collapsed">
@@ -32,7 +32,7 @@ const collapsed = ref(true);
     </div>
     <div v-if="!collapsed" class="card-body py-1 px-2">
       <div class="card-badges">
-          <span class="badge bg-secondary-subtle text-secondary me-1">
+          <span v-if="task.category" class="badge bg-secondary-subtle text-secondary me-1">
             <font-awesome-icon icon="fa fa-cat"></font-awesome-icon>
             <strong class="ms-1">{{ task.category.name }}</strong>
           </span>

@@ -5,7 +5,8 @@ import Sidebar from "~/components/navigation/Sidebar.vue";
 import List from "~/components/list/List.vue";
 import TaskItem from "~/features/task/components/TaskItem.vue";
 import {createTaskTemplate} from "~/features/task/templates/task-template.js";
-import TaskModal from "~/features/task/modals/TaskModal.vue";
+import TaskModal from "@/features/task/components/modals/TaskModal.vue";
+import TaskSidebar from "@/features/task/components/sidebar/TaskSidebar.vue";
 
 const tasks = ref([]);
 const categories = ref([]);
@@ -82,7 +83,7 @@ onMounted(() => {
     <div class="basketdo-tasks__content">
       <List>
         <template #sidebar>
-          <h1>Sidebar</h1>
+          <TaskSidebar/>
         </template>
         <template #filter>
           <div class="row g-2 mt-0">
@@ -121,7 +122,9 @@ onMounted(() => {
             </div>
             <div class="col-4">
               <div class="d-flex justify-content-end">
-                <button class="btn btn-success" @click="showTaskDialog">New Task</button>
+                <button class="btn btn-success" @click="showTaskDialog">
+                  New Task
+                </button>
               </div>
             </div>
           </div>
@@ -137,9 +140,9 @@ onMounted(() => {
           <nav aria-label="Page navigation example">
             <ul class="pagination">
               <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item" v-for="(_, index) in Array(10)" :key="index">
+                <a class="page-link" href="#" v-text="index"></a>
+              </li>
               <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
           </nav>
