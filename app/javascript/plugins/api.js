@@ -4,7 +4,7 @@ const csrfToken = document
     .getAttribute("content");
 const instance = Axios.create({
     baseURL: '/api/v1/',
-    timeout: 1000,
+    timeout: 10000,
     headers: { 'X-CSRF-Token': csrfToken }
 });
 

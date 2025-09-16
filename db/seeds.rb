@@ -8,29 +8,4 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-# Initial dummy data
-Category.destroy_all
-Task.destroy_all
-
-category1 = Category.create({ name: "Art"})
-category2 = Category.create({ name: "Exercise"})
-
-10.times do |index|
-  Task.create({
-                name: "Task #{index}",
-                description: "This is a task",
-                duration: 20 * index,
-                due_on: (10 * index).days.from_now,
-                category: category1
-              })
-end
-
-10.times do |index|
-  Task.create({
-                name: "TODO #{index}",
-                description: "This is a todo",
-                duration: 20 * index,
-                due_on: (10 * index).days.from_now,
-                category: category2
-              })
-end
+require_relative './dummy_seeds'

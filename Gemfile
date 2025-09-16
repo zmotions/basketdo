@@ -79,3 +79,4 @@ end
 gem "foreman", "~> 0.87.2", :group => :development
 
 gem "haml-rails", "~> 2.1"
+gem "faker", "~> 3.5", ">= 3.5.2"

@@ -7,8 +7,15 @@ import TaskItem from "~/features/task/components/TaskItem.vue";
 import {createTaskTemplate} from "~/features/task/templates/task-template.js";
 import TaskModal from "@/features/task/components/modals/TaskModal.vue";
 import TaskSidebar from "@/features/task/components/sidebar/TaskSidebar.vue";
+import {createPageTemplate} from "@/features/task/templates/pagination-template.js";
+import ListPagination from "@/components/list/ListPagination.vue";
 
 const tasks = ref([]);
+const filter = ref({
+  query: null,
+  category: null,
+})
+const pagination = ref(createPageTemplate());
 const categories = ref([]);
 const showDialog = ref(false);
 const currentTask = ref(createTaskTemplate());
@@ -22,10 +29,16 @@ function closeTaskDialog() {
   showDialog.value = false;
 }
 
-function loadTasks() {
-  return httpClient.get("/tasks.json")
+function loadTasks(page = 1, per_page = pagination.value.per_page) {
+  return httpClient.get("/tasks.json", {
+    params: {
+      pagination: {page, per_page},
+      filter: filter.value
+    }
+  })
       .then(res => {
         tasks.value = res.data.list;
+        pagination.value = res.data.pagination;
       })
 }
 
@@ -89,7 +102,13 @@ onMounted(() => {
           <div class="row g-2 mt-0">
             <div class="col-8">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search tasks..." aria-label="Task search input"
+                <input v-model="filter.query"
+                       @input="loadTasks()"
+                       @keyup.enter="loadTasks()"
+                       type="text"
+                       class="form-control"
+                       placeholder="Search tasks..."
+                       aria-label="Task search input"
                        aria-describedby="button-addon2">
                 <button class="btn btn-primary" type="button" id="button-addon2">
                   <font-awesome-icon icon="fa fa-search"></font-awesome-icon>
@@ -97,8 +116,11 @@ onMounted(() => {
               </div>
             </div>
             <div class="col-4">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Category...</option>
+              <select v-model="filter.category"
+                      class="form-select"
+                      @change="loadTasks()"
+                      aria-label="Default select example">
+                <option selected :value="null">Category...</option>
                 <option v-for="category in categories"
                         :value="category.id"
                         v-text="category.name"
@@ -137,15 +159,7 @@ onMounted(() => {
           </div>
         </template>
         <template #pagination>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item" v-for="(_, index) in Array(10)" :key="index">
-                <a class="page-link" href="#" v-text="index"></a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
+          <ListPagination @refresh="loadTasks" :pagination="pagination" />
         </template>
       </List>
     </div>

@@ -4,7 +4,10 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all.reverse
+    @tasks = Task.ordered
+    @tasks = @tasks.filter_by_search(filter_param(:query))
+    @tasks = @tasks.filter_by_category(filter_param(:category))
+    @tasks = paginate(@tasks)
   end
 
   # GET /tasks/1
@@ -50,4 +53,8 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:name, :description, :duration, :due_on)
     end
+
+  def allowed_filter_params
+    super.concat([:category])
+  end
 end
